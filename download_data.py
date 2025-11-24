@@ -2,7 +2,7 @@
 import os
 import requests
 import GEOparse
-import logging\
+import logging
 from pathlib import Path
 import shutil
 
