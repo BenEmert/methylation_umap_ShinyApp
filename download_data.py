@@ -56,6 +56,8 @@ def download_geo_supp_file(geo_accession, file_pattern, output_dir):
     # 2. Find the correct URL from metadata
     found_url = None
     for url in gse.metadata.get('supplementary_file', []):
+        print(url)
+        print(file_pattern)
         if file_pattern in url:
             found_url = url
             break
