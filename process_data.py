@@ -54,6 +54,9 @@ def load_and_align(data_path, meta_path):
     # Match sample names
     print("   Matching methylation data samples to metadata...")
     reference_meta.set_index('ID', inplace=True)
+    #Drop original Colours column if exists
+    if 'Colour' in reference_meta.columns:
+        reference_meta.drop(columns=['Colour'], inplace=True)
     # Intersect indices
     common_ids = data_df.index.intersection(reference_meta.index)
     
@@ -149,10 +152,10 @@ def main():
     meta_complete = pd.merge(meta, df_diagnosis, how='left', on='Diagnosis')
 
     # 4. Save to Disk
-    print("   [SAVING] Writing Parquet files...")
-    df.to_parquet(OUTPUT_DATA)
-    meta_complete.to_parquet(OUTPUT_META)
-    
+    print("   [SAVING] Writing processed data files...")
+    df.to_parquet(OUTPUT_DATA, engine="pyarrow", compression="zstd")
+    meta_complete.to_parquet(OUTPUT_META, engine="pyarrow", compression="zstd")
+
     print(f"===  Data ready for App. ===")
 
 if __name__ == "__main__":
