@@ -78,7 +78,7 @@ def main():
     
     # Filter Missing Values
     print("   Removing probes with missing values...")
-    cpg_nan_counts = GPL13534_processed_df.isna().sum()
+    cpg_nan_counts = df.isna().sum()
     print(f'Number of CpG probes with missing values: {np.sum(cpg_nan_counts > 0)}')
     cpg_nan_counts = df.isna().sum()
     df = df.loc[:, cpg_nan_counts == 0]
