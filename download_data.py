@@ -48,16 +48,15 @@ def download_geo_supp_file(geo_accession, file_pattern, output_dir):
     
     # 1. Get GEO Object (metadata only, how='quick')
     try:
-        gse = GEOparse.get_GEO(geo_accession, destdir="./", how="quick", silent=True)
+        gse = GEOparse.get_GEO(geo_accession, destdir="./", silent=True)
     except Exception as e:
         print(f"   [ERROR] Could not fetch GEO metadata: {e}")
         raise e
 
     # 2. Find the correct URL from metadata
     found_url = None
-    for url in gse.metadata.get('supplementary_file', []):
-        print(url)
-        print(file_pattern)
+    for url in gse.metadata['supplementary_file']:
+        print(f"   [INFO] Checking supplementary file URL: {url}")
         if file_pattern in url:
             found_url = url
             break
